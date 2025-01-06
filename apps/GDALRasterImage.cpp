@@ -149,27 +149,23 @@ bool GDALRasterImage::IsNoData(float val) {
 };
 
  float GDALRasterImage::GetMin() {
-	float min = std::numeric_limits<float>::max();
-	for (int i = 0; i < this->nRows; i++) {
-		for (int j = 0; j < this->nCols; j++) {
-			float check = this->GetVal(i, j);
-			if (!this->IsNoData(check)) {
-				min = (min > check) ? check : min;
-			}
-		}
-	}
+	 float min = std::numeric_limits<float>::max();
+	 for (int i = 0; i < this->nRows * this->nCols; i++) {
+		 float check = this->GetVal(i);
+		 if (!this->IsNoData(check)) {
+			 min = (min > check) ? check : min;
+		 }
+	 }
  	return min;
  };
 
  float GDALRasterImage::GetMax() {
 	 float max = std::numeric_limits<float>::min();
-	 for (int i = 0; i < this->nRows; i++) {
-		 for (int j = 0; j < this->nCols; j++) {
-			 float check = this->GetVal(i, j);
-			 if (!this->IsNoData(check)) {
-				 max = (max < check) ? check : max;
-			 }
-		 }
+	 for (int i = 0; i < this->nRows * this->nCols; i++) {
+		float check = this->GetVal(i);
+		if (!this->IsNoData(check)) {
+			 max = (max < check) ? check : max;
+		}
 	 }
 	 return max;
  };

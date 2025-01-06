@@ -294,6 +294,13 @@ bool DataInput::tryAddInputParam(std::string name, std::vector<std::string> valu
 		}
 	}
 
+	if (this->inputParams.find(param->id) != this->inputParams.end()) {
+		std::string errstr = "duplicate input parameter " + param->id;
+		std::cout << errstr << std::endl;
+		this->log(errstr);
+		exit(EXIT_FAILURE);
+	}
+
 	//try to get the value as a scalar then grid
 	if (DataInput::getScalar(value.front(), param.get()) || DataInput::getGrid(value.front(), param.get())) {
 		//remove from required params set
@@ -316,6 +323,13 @@ bool DataInput::tryAddSeriesParam(std::string name, std::vector<std::string> val
 	//if the name does not have a corrosponding series param, return
 	if (!this->seriesParamNameMap.contains(name)) {
 		return false;
+	}
+
+	if (this->acquiredSeriesParams.find(name) != this->acquiredSeriesParams.end()) {
+		std::string errstr = "duplicate series parameter " + name;
+		std::cout << errstr << std::endl;
+		this->log(errstr);
+		exit(EXIT_FAILURE);
 	}
 
 	//get the index of the series param
@@ -435,7 +449,7 @@ bool DataInput::tryAddSeriesParam(std::string name, std::vector<std::string> val
 	}
 
 	//add series param name to set of acquired params
-	acquiredSeriesParams.insert(name);
+	this->acquiredSeriesParams.insert(name);
 	return true;
 }
 
@@ -458,6 +472,13 @@ bool DataInput::tryAddOutputParam(std::string name, std::vector<std::string> val
 	}
 	else {
 		opVar.id = name;
+	}
+
+	if (this->outputParams.find(opVar.id) != this->outputParams.end()) {
+		std::string errstr = "duplicate output parameter " + name;
+		std::cout << errstr << std::endl;
+		this->log(errstr);
+		exit(EXIT_FAILURE);
 	}
 
 	//ensure we have enough tokens
@@ -635,6 +656,14 @@ bool DataInput::tryAddManagementParam(std::string name, std::ifstream& inFile, i
 	}
 	
 	PPPG_MT_PARAM* table = &this->managementTables[index];
+
+	//firstYear is initialized to -1, meaning if it is no longer -1 there is a duplicate
+	if (table->firstYear != -1) {
+		std::string errstr = "duplicate management parameter " + name.substr(12);
+		std::cout << errstr << std::endl;
+		this->log(errstr);
+		exit(EXIT_FAILURE);
+	}
 	
 	std::string line;
 	while (std::getline(inFile, line)) {

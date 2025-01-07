@@ -46,7 +46,7 @@ std::string COPYMSG =
 "Developers: Nicholas Coops, Francois du Toit, Sarah Zwiep, and Joe Meyer\n"
 "Contact: nicholas.coops@ubc.ca\n\n"
 "Revision: " + VERSION + "\n"
-"Date: SEPTEMBER 2024\n\n"
+"Date: JANUARY 2025\n\n"
 "3-PG is based on work by Anders Siggins and CSIRO Australia\n"
 "---------------------------------------------------------------------\n"
 "DISCLAIMER\n"

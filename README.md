@@ -4,9 +4,20 @@
 If you notice a bug, or have an idea for a feature request, please use GitHub issues.
 
 # Running 3-PG
-Download and unzip the latest release from GitHub. Then, run using the run.bat script in the release folder. 
+Download and unzip the latest release from GitHub. Then, run using the run.bat script in the release folder. In Linux, you need to source the run.sh script to allow to temporarily export PROJ, if available. 
 
 Alternatively, you may run the executable directly. If you do this, ensure that the PROJ_DATA environment variable has been set to the 'proj' folder. Runtime warnings indicating 'proj.db' not found will occur if this is not done. This is necessary because 'proj' is a dependency of GDAL, which this new version of 3-PG utilizing .tif images relies on.
+
+To compile 3-PG from source in release mode, first check the prerequisistes, then run:
+```
+# Windows
+cmake -D CMAKE_BUILD_TYPE=Release -B build
+cmake --build build
+
+# Ubuntu
+cmake -G "Unix Makefiles" -D CMAKE_BUILD_TYPE=Release -B build
+cmake --build build
+```
 
 # Developing 3-PG
 ### Prerequisistes
@@ -15,7 +26,7 @@ Alternatively, you may run the executable directly. If you do this, ensure that 
 * [CMake](https://cmake.org/download/) (3.15 or higher)
 * [Git](https://git-scm.com/download/win)
 
-**On Ubuntu**:
+**On Linux**:
 * [g++](https://gcc.gnu.org/) (14 or higher)
 * [CMake](https://cmake.org/download/) (3.15 or higher)
 * [Git](https://git-scm.com/downloads/linux)
@@ -68,18 +79,13 @@ And you can make it the default compiler
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/local/gcc-14.2.0/bin/g++-14.2.0 14
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/local/gcc-14.2.0/bin/gcc-14.2.0 14
 ```
-- to install gdal you can use apt
-- note that in Linux, we link gdal dynamically
+- install gdal and boost via apt (note that in Linux we link gdal dynamically)
 ```
-sudo apt install gdal-bin libgdal-dev
+sudo apt install gdal-bin libgdal-dev libboost-all-dev
 ```
 - make sure that gdal is available in the system PATH
 ```
 export PATH="$PATH:<path_to_gdal_bin_dir>"
-```
-- similar for boost
-```
-sudo apt install libboost-all-dev
 ```
 
 ### Building project
@@ -97,18 +103,6 @@ unit tests. Running ./make_build.sh will build only the project in Release mode.
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 sudo apt-get update
 sudo apt-get install --only-upgrade libstdc++6
-```
-
-# Using 3-PG
-If you are simply interested in using 3-PG, you can compile the project with:
-```
-# Windows
-cmake -D CMAKE_BUILD_TYPE=Release -B build
-cmake --build build
-
-# Ubuntu
-cmake -G "Unix Makefiles" -D CMAKE_BUILD_TYPE=Release -B build
-cmake --build build
 ```
 
 ### Debugging the project

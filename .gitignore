@@ -55,3 +55,6 @@ build/*
 # Vscode 
 .vscode/*
 .vs/*
+
+# JetBrains
+.idea

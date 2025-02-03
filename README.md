@@ -42,9 +42,9 @@ git clone https://github.com/IRSS-UBC/3pg.git
 ```
 git clone https://github.com/Microsoft/vcpkg.git
 cd vcpkg
-./bootstrap-vcpkg.bat for Windows # ./bootstrap-vcpkg.sh for unix-like OS's
-./vcpkg integrate install
-./vcpkg install gdal
+.\bootstrap-vcpkg.bat
+.\vcpkg integrate install
+.\vcpkg install gdal
 ```
  - note: installing gdal will take a while, for me it took 4.4 hours.
  - add GDAL_DIR and VCPKG_ROOT to the environment variables:
@@ -53,10 +53,10 @@ cd vcpkg
    - create another new user variable with variable name GDAL_DIR and set it as the path to the folder containing the GDALConfig.cmake file (within in the vcpkg\packages folder). For me this was C:\Github\vcpkg\packages\gdal_x64-windows\share\gdal.
    - navigate to the vcpkg folder from the command line, and run the command.
 ```
-./vcpkg install gtest
+.\vcpkg install gtest
 ```
 ```
-./vcpkg install boost
+.\vcpkg install boost
 ```
 - note: installing boost will take a while, for me it took 1.7 hours.
 - go to the vcpkg folder and navigate to vcpkg/installed/x64-windows/include/ (note: x64-windows may be a different folder on your installation).
@@ -83,10 +83,6 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/local/gcc-14.2.0/bin/gc
 ```
 sudo apt install gdal-bin libgdal-dev libboost-all-dev
 ```
-- make sure that gdal is available in the system PATH
-```
-export PATH="$PATH:<path_to_gdal_bin_dir>"
-```
 
 ### Building project
 **On Windows**:
@@ -97,7 +93,7 @@ unit tests. Running ./make_build.bat will build only the project.
 
 **On Linux**:
 - running ./run_tests.sh will build the project with the testing folder and run the
-unit tests. Running ./make_build.sh will build only the project in Release mode.
+unit tests. Running ./make_build.sh will build only the project.
 - if you get an error like 'GLIBCXX_3.4.31/32 not found', you probably need to update libstdc++6
  ```
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test
